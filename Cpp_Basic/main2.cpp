@@ -97,7 +97,65 @@ int main(void)
 	cout << ++iNumber << endl;	// 13
 	cout << iNumber++ << endl;	// 13
 	cout << iNumber << endl;	// 14
+	/*
+	분기문에는 크게 2가지 종류가 있다. if문, switch 문이 존재한다.
+	if문 : 조건을 체크해주는 기능이다.
+	형태 : if(조건식) {}(코드블럭)
+	if 문은 조건식이 true가 될 경우 코드 블럭 안의 코드가 동작한다.
+	false일 경우에는 동작하지 않는다.
+	*/
+
+	if (false)
+	{
+		cout << "if문 조건이 true 입니다." << endl;
+	}
+
+	// 버프가 있는지 확인한다.
+	if ((iBuf & iAttack) != 0)
+	{
+		cout << "Attack 버프가 있습니다." << endl;
+	}
+
+	// if문 아래에 들어갈 코드가 1줄일 경우 {}(코드블럭)을 생략할 수 있다.
+	if ((iBuf & iArmor) != 0)
+		cout << "Armor 버프가 있습니다." << endl;
+
+	if ((iBuf & iHp) != 0)
+		cout << "Hp 버프가 있습니다." << endl;
 	
+	if ((iBuf & iMp) != 0)
+		cout << "Mp 버프가 있습니다." << endl;
+	
+	if ((iBuf & iCritical) != 0)
+		cout << "Critical 버프가 있습니다." << endl;
+
+	/*
+	else : if문과 반드시 같이 사용이 되어야 한다.
+	if문 조건이 false일 경우 else가 있다면 else 구문 안의 코드가 동작된다.
+
+	else if : if 문과 반드시 같이 사용이 되어야 한다.
+	if문 아래에 와야하고 else 보다는 위에 있어야 한다.
+	else if는 자신의 위에 있는 조건식이 false 일 경우 다음 else if의 조건식을 체크한다.
+	else if는 몇개든 사용이 가능하다.
+	*/
+
+	if (false)
+		cout << "if 조건문이 true 입니다." << endl;
+
+	else
+		cout << "if 조건문이 false 입니다." << endl;
+
+	cout << "숫자를 입력하세요 : ";
+	cin >> iNumber;
+
+	if (10 <= iNumber && iNumber <= 20)
+		cout << "10 ~ 20 사이의 숫자입니다." << endl;
+	else if (21 <= iNumber && iNumber <= 30)
+		cout << "21 ~ 30 사이의 숫자입니다." << endl;
+	else if (31 <= iNumber && iNumber <= 40)
+		cout << "31 ~ 40 사이의 숫자입니다." << endl;
+	else
+		cout << "그 외의 숫자입니다." << endl;
 
 	return 0;
 }
