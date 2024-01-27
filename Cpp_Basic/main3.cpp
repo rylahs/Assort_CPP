@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 
 using namespace std;
 
@@ -18,6 +19,14 @@ enum NUM
 	NUM_3,
 };
 
+enum SRP
+{
+	SRP_S = 1,
+	SRP_R,
+	SRP_P,
+	SRP_END
+};
+
 #define NUM_4	4
 
 int main(void)
@@ -31,9 +40,9 @@ int main(void)
 	case 상수: 의 형태로 처리가 되고 변수값이 무엇인지에 따라서
 	case 뒤에 오는 상수를 비교하게 된다.
 	*/
-	int iNumber;
+	int iNumber = 1;
 	cout << "숫자를 입력하세요 : ";
-	cin >> iNumber;
+	//cin >> iNumber;
 
 	switch (iNumber)
 	{
@@ -69,6 +78,100 @@ int main(void)
 	// 변수의 타입을 문자열로 반환해준다.
 	cout << typeid(NUM).name() << endl;
 	cout << eNum << endl;
+
+	/*
+	반복문 : 특정 작업을 반복해서 수행해주는 기능이다.
+	종류 : for, while, do-while 3종류가 존재한다.
+	while(조건식) {} 의 형태로 구성된다.
+	while문은 조건식을 체크해서 true일 경우 코드 블럭 안의 코드가 동작되고
+	다시 조건식을 체크한다.
+	조건식이 false가 되면 while문을 빠져나오게 된다.
+	반복문 안에서 break를 만나게되면 해당 반복문을 빠져나오게 된다.
+	*/
+	iNumber = 0;
+	while (iNumber < 10)
+	{
+		cout << iNumber << endl;
+		++iNumber;
+
+		if (iNumber == 4)
+			break;
+	}
+
+	// 화면을 깨끗히 지워준다.
+	system("cls");
+
+	// 난수 테이블 생성
+	srand((unsigned int)time(0));
+
+	int iPlayer, iAi;
+	while (true)
+	{
+		cout << "1. 가위" << endl;
+		cout << "2. 바위" << endl;
+		cout << "3. 보" << endl;
+		cout << "4. 종료" << endl;
+		cout << "메뉴를 선택하세요 : ";
+		cin >> iPlayer;
+
+		if (iPlayer < SRP_S || iPlayer > SRP_END)
+		{
+			cout << "잘못된 값을 입력하였습니다." << endl;
+			// 일시정지
+			system("pause");
+			// continue : 반복문의 시작점으로 이동시켜주는 기능이다. 
+			continue;
+		}
+
+		else if (iPlayer == SRP_END)
+		{
+			cout << "프로그램을 종료합니다." << endl;
+			break;
+		}
+
+		// 봇이 선택을 한다.
+		iAi = (rand() % 3) + SRP_S;
+
+		switch (iAi)
+		{
+		case SRP_S:
+			cout << "AI : 가위" << endl;
+			break;
+		case SRP_R:
+			cout << "AI : 바위" << endl;
+			break;
+		case SRP_P:
+			cout << "AI : 보" << endl;
+			break;
+		}
+
+		int iWin = iPlayer - iAi;
+		if (iWin == 1 || iWin == -2)
+			cout << "iPlayer 승리" << endl;
+
+		else if (iWin == 0)
+			cout << "비김" << endl;
+
+		else
+			cout << "AI 승리" << endl;
+
+		system("pause");
+
+		switch (iWin)
+		{
+		case 1:
+		case -2:
+			cout << "iPlayer 승리" << endl;
+			break;
+		case 0:
+			cout << "비김" << endl;
+			break;
+		default:
+			cout << "AI 승리" << endl;
+			break;
+
+		}
+	}
 
 	return 0;
 }
