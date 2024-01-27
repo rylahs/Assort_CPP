@@ -84,7 +84,7 @@ void hw5()
 	   ***
 	    *
 	*/
-	int iLine = 7; // 별의 최대 개수
+	int iLine = 31; // 별의 최대 개수
 	int iCount = 0;
 	for (int i = 0; i < iLine; ++i)
 	{
@@ -103,7 +103,7 @@ void hw5()
 		// i 갑싱 4 5 6일때는 iCount는 2 1 0이다
 		// 즉 최종 i 값은 0 1 2 3 2 1 0으로 들어가게 된다.
 
-		for (int j = 0; j < 3 - iCount; ++j)
+		for (int j = 0; j < iLine / 2 - iCount; ++j)
 		{
 			cout << " ";
 		}
