@@ -39,5 +39,8 @@
     <ClCompile Include="baseball.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="numberPuzzle.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
