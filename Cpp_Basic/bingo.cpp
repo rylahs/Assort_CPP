@@ -10,6 +10,22 @@ enum AI_MODE
 	AM_HARD
 };
 
+enum LINE_NUMBER
+{
+	LN_H1,
+	LN_H2,
+	LN_H3,
+	LN_H4,
+	LN_H5,
+	LN_V1,
+	LN_V2,
+	LN_V3,
+	LN_V4,
+	LN_V5,
+	LN_LT,
+	LN_RT,
+};
+
 int main(void)
 {
 	srand((unsigned int)time(0));
@@ -203,6 +219,138 @@ int main(void)
 			break;
 
 		case AM_HARD:
+			// 하드모드는 현재 숫자 중 빙고 완성 가능성이 가장 높은 줄을
+			// 찾아서 그 줄에 있는 숫자 중 하나를 *로 만들어 준다.
+			int iLine = 0;
+			int iStarCount = 0;
+			int iSaveCount = 0;
+
+			// 가로 라인 중 가장 *이 많은 라인을 찾아 낸다.
+			for (int i = 0; i < 5; ++i)
+			{
+				iStarCount = 0;
+				for (int j = 0; j < 5; ++j)
+				{
+					if (iAINumber[i * 5 + j] == INT_MAX)
+						++iStarCount;
+				}
+
+				// 별이 5개미만 이어야 빙고 줄이 아니고
+				// 기존에 가장 많은 라인의 별보다 커야 가장 별이 많은 라인이라
+				// 라인을 바꿀 수 있다.
+				if (iStarCount < 5 && iSaveCount < iStarCount)
+				{
+					// 여기는 가로 라인 중 가장 많은 라인을 체크하는 곳
+					// 가로 라인은 0 ~ 4로 의미를 부여했다.
+					iLine = i;
+					iSaveCount = iStarCount;
+				}
+			}
+
+			// 가로 라인 중 가장 별이 많은 라인은 이미 구했다.
+			// 이 값과 세로 라인들을 비교하여 별이 가장 많은 라인을 구한다.
+			for (int i = 0; i < 5; ++i)
+			{
+				iStarCount = 0;
+				for (int j = 0; j < 5; ++j)
+				{
+					if (iAINumber[j * 5 + i] == INT_MAX)
+						++iStarCount;
+				}
+				if (iStarCount < 5 && iSaveCount < iStarCount)
+				{
+					// 여기는 가로 라인 중 가장 많은 라인을 체크하는 곳
+					// 세로 라인은 5 ~ 9로 의미를 부여했다.
+					iLine = i + 5;
+					iSaveCount = iStarCount;
+				}
+			}
+			// 왼쪽 -> 오른쪽 대각선 체크
+			iStarCount = 0;
+			for (int i = 0; i < 25; i += 6)
+			{
+				if (iAINumber[i] == INT_MAX)
+					++iStarCount;
+			}
+			if (iStarCount < 5 && iSaveCount < iStarCount)
+			{
+				// 여기는 가로 라인 중 가장 많은 라인을 체크하는 곳
+				// 세로 라인은 5 ~ 9로 의미를 부여했다.
+				iLine = LN_LT;
+				iSaveCount = iStarCount;
+			}
+			// 오른쪽 -> 왼쪽 대각선 체크
+			iStarCount = 0;
+			for (int i = 4; i <= 20; i += 4)
+			{
+				if (iAINumber[i] == INT_MAX)
+					++iStarCount;
+			}
+			if (iStarCount < 5 && iSaveCount < iStarCount)
+			{
+				// 여기는 가로 라인 중 가장 많은 라인을 체크하는 곳
+				// 세로 라인은 5 ~ 9로 의미를 부여했다.
+				iLine = LN_RT;
+				iSaveCount = iStarCount;
+			}
+
+			// 모든 라인을 조사했으면 iLine에 가능성이 가장 높은 줄 번호가 저장 되었다.
+			// 그 줄 번에 있는 *이 아닌 숫자 중 하나를 선택하게 한다.
+			switch (iLine)
+			{
+			case LN_H1:
+			case LN_H2:
+			case LN_H3:
+			case LN_H4:
+			case LN_H5:
+				// 가로 줄일 경우 iLine은 0 ~ 4
+				for (int i = 0; i < 5; ++i)
+				{
+					// 현재 줄에서 *이 아닌 숫자를 찾아낸다
+					if (iAINumber[iLine * 5 + i] != INT_MAX)
+					{
+						iInput = iAINumber[iLine * 5 + i];
+						break;
+					}
+				}
+				break;
+			case LN_V1:
+			case LN_V2:
+			case LN_V3:
+			case LN_V4:
+			case LN_V5:
+				// 세로 줄일 경우 iLine은 5 ~ 9
+				for (int i = 0; i < 5; ++i)
+				{
+					// 현재 줄에서 *이 아닌 숫자를 찾아낸다
+					if (iAINumber[i * 5 + (iLine - 5)] != INT_MAX)
+					{
+						iInput = iAINumber[i * 5 + (iLine - 5)];
+						break;
+					}
+				}
+				break;
+			case LN_LT:
+				for (int i = 0; i < 25; i += 6)
+				{
+					if (iAINumber[i] != INT_MAX)
+					{
+						iInput = iAINumber[i];
+						break;
+					}
+				}
+				break;
+			case LN_RT:
+				for (int i = 4; i <= 20; i += 4)
+				{
+					if (iAINumber[i] != INT_MAX)
+					{
+						iInput = iAINumber[i];
+						break;
+					}
+				}
+				break;
+			}
 			break;
 		}
 		// AI가 숫자를 선택했으므로 플레이어와 AI 숫자를 *로 바꿔준다.
