@@ -35,6 +35,7 @@ enum MENU
 int main(void)
 {
 	_tagStudent tStudentArr[STUDENT_MAX] = {};
+	char	strName[NAME_SIZE] = {};
 	// 배열에 추가된 개수를 저장할 변수를 만들어준다.
 	int iStudentCount = 0;
 	int iStudentNumber = 1;
@@ -128,8 +129,56 @@ int main(void)
 			
 			break;
 		case MENU_DELETE:
+			system("cls");
+			cout << "=============== 학생 삭제 ===============" << endl;
+
+			cin.ignore(1024, '\n');
+			cout << "삭제할 이름을 입력하세요 : ";
+			cin.getline(strName, NAME_SIZE);
+			// 등록되어 있는 학생 수 만큼 반복하며 학생을 찾는다.
+			for (int i = 0; i < iStudentCount; i++)
+			{
+				if (strcmp(tStudentArr[i].strName, strName) == 0)
+				{
+					for (int j = i; j < iStudentCount - 1; j++)
+					{
+						tStudentArr[i] = tStudentArr[i + 1];
+					}
+
+					--iStudentCount;
+
+					cout << "학생을 삭제했습니다." << endl;
+					break;
+				}
+			}
+
 			break;
 		case MENU_SEARCH:
+			system("cls");
+			cout << "=============== 학생 탐색 ===============" << endl;
+			
+			cin.ignore(1024, '\n');
+			cout << "탐색할 이름을 입력하세요 : ";
+			cin.getline(strName, NAME_SIZE);
+
+			// 등록되어 있는 학생 수 만큼 반복하며 학생을 찾는다.
+			for (int i = 0; i < iStudentCount; i++)
+			{
+				if (strcmp(tStudentArr[i].strName, strName) == 0)
+				{
+					cout << "이름 : " << tStudentArr[i].strName << endl;
+					cout << "전화번호 : " << tStudentArr[i].strPhoneNumber << endl;
+					cout << "주소 : " << tStudentArr[i].strAddress << endl;
+					cout << "학번 : " << tStudentArr[i].iNumber << endl;
+					cout << "국어 : " << tStudentArr[i].iKor << endl;
+					cout << "영어 : " << tStudentArr[i].iEng << endl;
+					cout << "수학 : " << tStudentArr[i].iMath << endl;
+					cout << "총점 : " << tStudentArr[i].iTotal << endl;
+					cout << "평균 : " << tStudentArr[i].fAvg << endl;
+					cout << endl;
+					break;
+				}
+			}
 			break;
 		case MENU_PRINT:
 			system("cls");
