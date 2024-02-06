@@ -34,6 +34,11 @@ enum JOB
 
 #define NAME_SIZE	32
 
+struct _tagInventory
+{
+	int		iGold;
+};
+
 struct _tagPlayer
 {
 	char	strName[NAME_SIZE];
@@ -49,6 +54,7 @@ struct _tagPlayer
 	int		iMpMax;
 	int		iExp;
 	int		iLevel;
+	_tagInventory tInventory;
 };
 
 struct _tagMonster
@@ -103,6 +109,7 @@ int main(void)
 	tPlayer.iLevel = 1;
 	tPlayer.iExp = 0;
 	tPlayer.eJob = (JOB)iJob;
+	tPlayer.tInventory.iGold = 10000;
 
 	switch (tPlayer.eJob)
 	{
@@ -262,7 +269,31 @@ int main(void)
 						break;
 					}
 
-					
+					// 플레이어 정보를 출력한다.
+					cout << "==================== Player ====================" << endl;
+					cout << "이름 : " << tPlayer.strName << "\t직업 : " <<
+						tPlayer.strJobName << endl;
+					cout << "레벨 : " << tPlayer.iLevel << "\t경험치 : " <<
+						tPlayer.iExp << endl;
+					cout << "공격력 : " << tPlayer.iAttackMin << " - " <<
+						tPlayer.iAttackMax << "\t방어력 : " << tPlayer.iArmorMin <<
+						" - " << tPlayer.iArmorMax << endl;
+					cout << "체력 : " << tPlayer.iHp << " / " << tPlayer.iHpMax <<
+						"\t마나 : " << tPlayer.iMp << " / " << tPlayer.iMpMax << endl;
+					cout << "보유 골드 : " << tPlayer.tInventory.iGold << " Gold" << endl << endl;
+
+					// 몬스터 정보 출력
+					cout << "==================== Monster ====================" << endl;
+					cout << "이름 : " << tMonster.strName << "\t레벨 : " << 
+						tPlayer.iLevel << endl;
+					cout << "공격력 : " << tMonster.iAttackMin << " - " <<
+						tMonster.iAttackMax << "\t방어력 : " << tMonster.iArmorMin <<
+						" - " << tMonster.iArmorMax << endl;
+					cout << "체력 : " << tMonster.iHp << " / " << tMonster.iHpMax <<
+						"\t마나 : " << tMonster.iMp << " / " << tMonster.iMpMax << endl;
+					cout << "획득경험치 : " << tMonster.iExp << "\t획득골드 : " <<
+						tMonster.iGoldMin << " - " << tMonster.iGoldMax << endl;
+
 				}
 
 			}
